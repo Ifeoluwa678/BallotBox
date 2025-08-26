@@ -1,0 +1,27 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment & secrets
+.env
+credentials.json
+token.json
+debug_email.py
+
+# Local database (SQLite)
+instance/
+*.db
+*.sqlite3
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

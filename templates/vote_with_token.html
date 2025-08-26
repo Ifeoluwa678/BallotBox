@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote - {{ election.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Vote in {{ election.title }}</h1>
+    </header>
+
+    <main>
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ category }}">
+                <p>{{ message }}</p>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="card">
+            <div class="form-group">
+                <label for="email">Your Registered Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="passcode">Election Passcode:</label>
+                <input type="text" name="passcode" id="passcode" required placeholder="Enter election passcode">
+            </div>
+
+            <div class="form-group">
+                <label>Choose Candidate:</label>
+                <div class="candidates-list">
+                    {% for candidate in candidates %}
+                        <div class="candidate-option">
+                            <input type="radio" id="candidate{{ candidate.id }}" name="candidate" value="{{ candidate.id }}" required>
+                            <label for="candidate{{ candidate.id }}">
+                                {{ candidate.name }} - {{ candidate.position }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Submit Vote</button>
+        </form>
+
+        <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+    </main>
+</body>
+</html>

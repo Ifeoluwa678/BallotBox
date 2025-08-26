@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Candidates - BallotBox</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1><span class="logo"></span>Manage Candidates</h1>
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('manage_elections') }}">My Elections</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Manage Candidates for {{ election.title }}</h2>
+            
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <h3>Current Candidates & Results</h3>
+            {% if candidates %}
+            <div class="dashboard-grid">
+                {% for candidate in candidates %}
+                <div class="dashboard-card">
+                    <h4>{{ candidate.name }}</h4>
+                    <p><strong>Position:</strong> {{ candidate.position }}</p>
+                    <p>{{ candidate.bio }}</p>
+                    <p><strong>Votes:</strong> {{ candidate.votes }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card">
+                <p>No candidates added yet.</p>
+            </div>
+            {% endif %}
+
+            <div class="card" style="margin-top: 30px;">
+                <h3>Add New Candidate</h3>
+                <form method="POST">
+                    <label for="name">Candidate Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" name="position" required>
+                    
+                    <label for="bio">Bio (optional):</label>
+                    <textarea id="bio" name="bio" rows="3"></textarea>
+                    
+                    <button type="submit">Add Candidate</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

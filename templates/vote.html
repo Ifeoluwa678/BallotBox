@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote - {{ election.title }} - BallotBox</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1><span class="logo"></span>Cast Your Vote</h1>
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>{{ election.title }}</h2>
+            <p>{{ election.description }}</p>
+            
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="card">
+                <h3>Select Your Candidate</h3>
+                <form method="POST">
+                    {% for candidate in candidates %}
+                    <div style="margin-bottom: 15px; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+                        <input type="radio" id="candidate{{ candidate.id }}" name="candidate" value="{{ candidate.id }}" required>
+                        <label for="candidate{{ candidate.id }}" style="font-weight: bold; margin-left: 10px;">
+                            {{ candidate.name }} - {{ candidate.position }}
+                        </label>
+                        {% if candidate.bio %}
+                        <p style="margin: 10px 0 0 25px; color: #666;">{{ candidate.bio }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    
+                    <button type="submit" style="margin-top: 20px;">Submit Vote</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

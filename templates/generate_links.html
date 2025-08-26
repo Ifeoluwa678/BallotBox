@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Links - BallotBox</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1><span class="logo"></span>Voting Links</h1>
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('manage_elections') }}">My Elections</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Voting Link for {{ election.title }}</h2>
+            
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="card">
+                <p>Share this link with voters:</p>
+                
+                <div style="display: flex; gap: 10px; align-items: center; margin: 15px 0;">
+                    <input type="text" id="votingLink" value="{{ voting_link }}" readonly style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    <button onclick="copyLink()" class="btn">Copy Link</button>
+                </div>
+                
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                    Voters will need to be logged in to vote. The election is active from 
+                    {{ election.start_time.strftime('%Y-%m-%d %H:%M') }} to 
+                    {{ election.end_time.strftime('%Y-%m-%d %H:%M') }}.
+                </p>
+                
+                <!-- Test the link -->
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
+                    <p><strong>Test the link:</strong></p>
+                    <a href="{{ voting_link }}" target="_blank" class="btn" style="display: inline-block; width: auto; margin-top: 10px;">
+                        Open Voting Page
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function copyLink() {
+            const linkInput = document.getElementById('votingLink');
+            linkInput.select();
+            document.execCommand('copy');
+            alert('Link copied to clipboard!');
+        }
+    </script>
+</body>
+</html>

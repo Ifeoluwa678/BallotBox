@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Election - BallotBox</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Create a New Election</h1>
+
+    <form id="electionForm" method="POST">
+        <!-- Coordinator Info -->
+        <div class="section">
+            <h2>Coordinator Info</h2>
+            <p><strong>Email:</strong> {{ coordinator.email }}</p>
+            <p><strong>Role:</strong> {{ coordinator.role }}</p>
+        </div>
+
+        <!-- Election Info -->
+        <div class="section">
+            <h2>Election Info</h2>
+            <label>Title:</label>
+            <input type="text" name="title" required><br>
+
+            <label>Description:</label>
+            <textarea name="description"></textarea><br>
+
+            <label>Start Time:</label>
+            <input type="datetime-local" name="start_time" required><br>
+
+            <label>End Time:</label>
+            <input type="datetime-local" name="end_time" required><br>
+
+            <label>Passcode (for voters):</label>
+            <input type="text" name="passcode" required placeholder="Set election passcode"><br>
+        </div>
+
+        <!-- Contestants Section -->
+        <div class="section">
+            <h2>Contestants</h2>
+            <div id="contestants">
+                <div class="contestant">
+                    <input type="text" name="contestant_names[]" placeholder="Candidate Name" required>
+                    <input type="text" name="contestant_positions[]" placeholder="Position" required>
+                    <button type="button" class="remove-btn" onclick="removeField(this)">Remove contestant</button>
+                </div>
+            </div>
+            <button type="button" onclick="addContestant()">+ Add More Contestants</button>
+        </div>
+
+        <!-- Voters Section -->
+        <div class="section">
+            <h2>Voters</h2>
+            <div id="voters">
+                <div class="voter">
+                    <input type="email" name="voter_emails[]" placeholder="Voter Email" required>
+                    <input type="text" name="voter_phones[]" placeholder="Phone Number" required>
+                    <button type="button" class="remove-btn" onclick="removeField(this)">Remove voter</button>
+                </div>
+            </div>
+            <button type="button" onclick="addVoter()">+ Add More Voters</button>
+        </div>
+
+        <button type="button" id="submitBtn">Create Election</button>
+    </form>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <p>⚠ Election will be created and the voting links will be sent to the emails you entered for voters. Do you want to continue?</p>
+            <div class="modal-actions">
+                <button id="confirmYes" class="confirm-btn">Yes, Create</button>
+                <button id="confirmNo" class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add/remove contestants
+        function addContestant() {
+            const div = document.createElement('div');
+            div.classList.add('contestant');
+            div.innerHTML = `
+                <input type="text" name="contestant_names[]" placeholder="Candidate Name" required>
+                <input type="text" name="contestant_positions[]" placeholder="Position" required>
+                <button type="button" class="remove-btn" onclick="removeField(this)">Remove</button>
+            `;
+            document.getElementById('contestants').appendChild(div);
+        }
+
+        // Add/remove voters
+        function addVoter() {
+            const div = document.createElement('div');
+            div.classList.add('voter');
+            div.innerHTML = `
+                <input type="email" name="voter_emails[]" placeholder="Voter Email" required>
+                <input type="text" name="voter_phones[]" placeholder="Phone Number" required>
+                <button type="button" class="remove-btn" onclick="removeField(this)">Remove</button>
+            `;
+            document.getElementById('voters').appendChild(div);
+        }
+
+        // General remove function
+        function removeField(button) {
+            button.parentElement.remove();
+        }
+
+        // Confirmation Modal Logic
+        const form = document.getElementById("electionForm");
+        const modal = document.getElementById("confirmModal");
+        const submitBtn = document.getElementById("submitBtn");
+        const confirmYes = document.getElementById("confirmYes");
+        const confirmNo = document.getElementById("confirmNo");
+
+        submitBtn.addEventListener("click", () => {
+            modal.style.display = "flex";
+        });
+
+        confirmYes.addEventListener("click", () => {
+            modal.style.display = "none";
+            form.submit();
+        });
+
+        confirmNo.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+    </script>
+</body>
+</html>

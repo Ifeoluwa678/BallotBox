@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BallotBox - Secure Online Voting System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                <div class="logo"></div>
+                <h1>BallotBox</h1>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Welcome to BallotBox</h1>
+            <h2>Secure, Transparent, and Reliable Online Voting</h2>
+            <p>
+                Empowering institutions, organizations, and communities with a safe platform 
+                where every vote counts and results are accurate.
+            </p>
+            <a href="{{ url_for('register') }}" class="btn">Setup Your Voting Now</a>
+        </section>
+
+        <!-- About Section -->
+        <section>
+            <h2>About BallotBox</h2>
+            <p>
+                BallotBox is a cutting-edge online voting system designed to make elections 
+                easier to manage while maintaining the highest standards of security and transparency. 
+                Our mission is to democratize the voting process and make it accessible to everyone.
+            </p>
+        </section>
+
+        <!-- Features Section -->
+        <section>
+            <h2>Why Choose BallotBox?</h2>
+            <ul class="feature-list">
+                <li>
+                    <strong>Advanced Security:</strong> Every vote is encrypted using military-grade 
+                    security and stored safely in our protected database.
+                </li>
+                <li>
+                    <strong>Real-time Transparency:</strong> Coordinators can monitor elections 
+                    in real-time with comprehensive analytics and reporting.
+                </li>
+                <li>
+                    <strong>Universal Accessibility:</strong> Voters can participate from anywhere 
+                    using their computers, tablets, or mobile devices.
+                </li>
+                <li>
+                    <strong>Unlimited Scalability:</strong> Perfect for small groups, schools, 
+                    unions, corporations, or large-scale organizational elections.
+                </li>
+                <li>
+                    <strong>Instant Results:</strong> Automated tallying provides immediate, 
+                    accurate results with detailed breakdowns.
+                </li>
+                <li>
+                    <strong>User-Friendly Interface:</strong> Intuitive design ensures easy 
+                    navigation for voters and administrators alike.
+                </li>
+            </ul>
+        </section>
+
+        <!-- How It Works -->
+        <section>
+            <h2>How It Works</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3><span class="icon">⚙️</span> Setup Election</h3>
+                    <p>Coordinators create and configure elections from their secure dashboard with customizable settings.</p>
+                </div>
+                <div class="dashboard-card">
+                    <h3><span class="icon">👥</span> Register Candidates</h3>
+                    <p>Add candidates for each position with detailed profiles and campaign information.</p>
+                </div>
+                <div class="dashboard-card">
+                    <h3><span class="icon">🗳️</span> Cast Votes</h3>
+                    <p>Voters securely cast their ballots online using their authenticated accounts.</p>
+                </div>
+                <div class="dashboard-card">
+                    <h3><span class="icon">📊</span> View Results</h3>
+                    <p>Real-time results are automatically tallied and displayed with complete accuracy and transparency.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Election Status -->
+        <section>
+            <h2>Election Management</h2>
+            <div class="card">
+                <h3>Current Election Status</h3>
+                <p>Monitor your elections with real-time status indicators:</p>
+                <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; margin-top: var(--spacing-lg);">
+                    <span class="status status-active">● Active Elections</span>
+                    <span class="status status-pending">● Pending Setup</span>
+                    <span class="status status-completed">● Completed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section>
+            <h2>Ready to Get Started?</h2>
+            <div class="card">
+                <p>
+                    Whether you're an institution looking to run free and fair elections, 
+                    a student organization planning leadership votes, or a community group 
+                    seeking democratic decision-making tools, BallotBox is your trusted partner.
+                </p>
+                <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: center; margin-top: var(--spacing-lg);">
+                    <a href="{{ url_for('register') }}" class="btn">Create Account</a>
+                    <a href="{{ url_for('login') }}" class="btn" style="background: linear-gradient(135deg, var(--accent), var(--accent-light));">Login Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Benefits -->
+        <section>
+            <h2>Trusted by Organizations Worldwide</h2>
+            <p style="text-align: center; color: var(--gray); margin-bottom: var(--spacing-lg);">
+                Join thousands of organizations that trust BallotBox for their democratic processes
+            </p>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3 style="color: var(--accent);">🏫 Educational Institutions</h3>
+                    <p>Student government elections, faculty voting, and academic decision-making processes.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent);">🏢 Corporate Organizations</h3>
+                    <p>Board elections, employee representation, and organizational policy decisions.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent);">🤝 Community Groups</h3>
+                    <p>Neighborhood associations, clubs, unions, and non-profit organization elections.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 BallotBox. All Rights Reserved. | Powering Democracy Through Technology</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Voters - BallotBox</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Add Voters for {{ election.title }}</h1>
+
+    <form method="POST">
+        <label for="email">Voter Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter voter email" required>
+
+        <label for="phone">Phone (optional):</label>
+        <input type="text" id="phone" name="phone" placeholder="Enter phone number">
+
+        <button type="submit">Add Voter</button>
+    </form>
+
+    <h2>Registered Voters</h2>
+    {% if voters %}
+        <ul>
+            {% for v in voters %}
+                <li>
+                    {{ v.email }} - 
+                    <strong>Voting Link:</strong> <a href="{{ url_for('vote_with_token', token=v.token.token) }}" target="_blank">/vote_with_token/{{ v.token.token }}</a>
+                    {% if v.token and v.token.is_used %}
+                        <span style="color: red;">(USED)</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No voters have been added yet.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+</body>
+</html>
