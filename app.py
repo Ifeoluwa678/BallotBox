@@ -14,16 +14,20 @@ from extensions import db
 from models import User, Election, Candidate, Vote, Voter, Token
 from email_service import send_voting_email
 from sqlalchemy import func
+from flask_sqlalchemy import SQLAlchemy
 
 
 # -------------------
 # App Setup
 # -------------------
-load_dotenv()
+load_dotenv()  # Must be first
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+db = SQLAlchemy()
 # Init extensions
 db.init_app(app)
 migrate = Migrate(app, db)
