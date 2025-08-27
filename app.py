@@ -118,7 +118,7 @@ def create_election():
             description=description,
             start_time=start_time,
             end_time=end_time,
-            created_by=current_user.id,
+            coordinator_id=current_user.id,
             is_active=True,
             passcode=passcode
         )
@@ -194,7 +194,7 @@ def manage_elections():
         flash("Coordinator only.", "danger")
         return redirect(url_for('dashboard'))
 
-    elections = Election.query.filter_by(created_by=current_user.id).all()
+    elections = Election.query.filter_by(coordinator_id=current_user.id).all()
     return render_template('manage_elections.html', elections=elections)
 
 
@@ -204,7 +204,7 @@ def manage_elections():
 def delete_election(election_id):
     election = Election.query.get_or_404(election_id)
 
-    if election.created_by != current_user.id:
+    if election.coordinator_id != current_user.id:
         flash("You are not authorized to delete this election.", "danger")
         return redirect(url_for("manage_elections"))
 

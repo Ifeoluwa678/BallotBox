@@ -23,16 +23,17 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password, password)
 
 
-# -------------------
 # Election Model
-# -------------------
 class Election(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     start_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     end_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    # Rename this to match your DB column
+    coordinator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     passcode = db.Column(db.String(50), nullable=False)
@@ -42,7 +43,6 @@ class Election(db.Model):
     voters = db.relationship("Voter", backref="election", cascade="all, delete-orphan", lazy=True)
     tokens = db.relationship("Token", backref="election", cascade="all, delete-orphan", lazy=True)
     votes = db.relationship("Vote", backref="election", cascade="all, delete-orphan", lazy=True)
-
 
 # -------------------
 # Candidate Model
